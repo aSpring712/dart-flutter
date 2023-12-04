@@ -1,6 +1,6 @@
 void main() {
   
-  var myVariable = 50; // 값을 넣는 순간 컴파일 시점에 데이터 타입이 결정 됨(동적)
+  var myVariable = 50; // 값을 넣는 순간 컴파일 시점에 데이터 타입이 결정 됨
   // myVariable = "Hello"; // Error 발생
   // var 키워드를 사용해서 처음 데이터 타입이 결정되면 변경할 수 없다.
 
