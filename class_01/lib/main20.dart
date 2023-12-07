@@ -1,8 +1,6 @@
-void main() {
-  String text = "반가워 여기는 지역 변수야~";
-  print(text);
+import 'main19.dart'; // import
 
+void main() {
+  // main19파일에 있는 글로벌 변수를 가지고 오고 싶다면??
   print(global);
 }
-
-String global = "여기는 글로벌 범위의 변수입니다";
