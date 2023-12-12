@@ -24,7 +24,11 @@ class OrderServiceImpl implements OrderService {
     // 2. 회원 등급에 해당하는 할인 정책을 반영한다.
 
     //              memberEntity.id
-    return Order(memberId: memberId, itemName: itemName, itemPrice: itemPrice, discountPrice: discountPrice);
+    return Order(
+        memberId: memberId,
+        itemName: itemName,
+        itemPrice: itemPrice,
+        discountPrice: discountPrice);
   }
 
 }

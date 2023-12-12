@@ -11,7 +11,7 @@ void main() {
   test('회원 가입 서비스 테스트1', () {
     
     // given
-    MemberRepository memberRepository = MemberRepositoryImpl();
+    MemberRepository memberRepository = MemoryMemberRepositoryImpl();
     MemberService memberService = MemberServiceImpl(memberRepository);
     Member newMember = Member(id: 1, name: '홍길동', grade: Grade.BASIC);
     

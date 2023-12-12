@@ -1,13 +1,15 @@
-
 // 주문 클래스 생성
 class Order {
-
   num memberId;
   String itemName;
   int itemPrice;
   int discountPrice;
 
-  Order({required this.memberId, required this.itemName, required this.itemPrice, required this.discountPrice});
+  Order(
+      {required this.memberId,
+        required this.itemName,
+        required this.itemPrice,
+        required this.discountPrice});
 
   int calculateDiscount() {
     return itemPrice - discountPrice;
@@ -15,6 +17,6 @@ class Order {
 
   @override
   String toString() {
-    return 'order{memberId: $memberId, itemName: $itemName, itemPrice: $itemPrice, discountPrice: $discountPrice}';
+    return 'Order{memberId: $memberId, itemName: $itemName, itemPrice: $itemPrice, discountPrice: $discountPrice}';
   }
 }
