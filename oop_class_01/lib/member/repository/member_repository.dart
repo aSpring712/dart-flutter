@@ -10,6 +10,4 @@ abstract class MemberRepository {
   void save(Member member);
   Member? findById(num memberId); // DB, 메모리, 사용자가 없는 경우가 있음 -> 예외처리 -> 간단하게 nullable로 바꾸기(?)
 
-
-
 }
