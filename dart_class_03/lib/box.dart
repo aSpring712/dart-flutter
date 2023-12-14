@@ -40,5 +40,27 @@ void main() {
   print(findData1);
   var findData2 = intBox.getValue();
   print(findData2);
+
+  var numbers = [1, 2, 3, 4, 5];
+  var firstEven = findFirst(numbers, (n) => n % 2 == 0);
+  print(firstEven);
+
 }
 
+// 심화
+// 제네릭 함수 - 설계
+T? findFirst<T>(List<T> items, bool Function(T) check) {
+  var count = 0;
+  // 요소의 처음부터 끝까지 반복
+  for(var item in items) {
+    count++;
+    print("count : $count, item : $item");
+
+    if(check(item)) {
+      // check는 함수이다.
+      return item;
+    }
+  }
+
+  return null;
+}
