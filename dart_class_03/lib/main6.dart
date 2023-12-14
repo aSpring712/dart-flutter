@@ -3,7 +3,8 @@ void main() {
 
   // 동기적 -> task 1, 2, 3 순차적으로 실행됨
   print("task 1..........");
-  print("task 2..........");
+  var data1 = fetchData();
+  print("task 2.......... ${data1}"); // Future<String>
   print("task 3..........");
   
 }
