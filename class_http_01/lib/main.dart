@@ -1,125 +1,67 @@
-import 'package:flutter/material.dart';
+import 'package:class_http_01/todo.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-void main() {
-  runApp(const MyApp());
+main() { // return type 생략 가능
+
+
+  /** 1 */
+  // // main 함수라 비동기처리하기 싫음 -> call back
+  // fetchTodo().then((res) {
+  //   // 웹 --> HTTP MESSAGE 구성 이해하기!
+  //   print(res.headers);
+  //   print(res.body); // 통신을 통해서 받은 데이터를 우리 코드상에서 활용해야 함
+  //   print("--------------------------");
+  //   print(res.body.runtimeType); // String
+  //   // res.body.userId // --> DTO 방식
+  // });
+
+  // ''' 여러줄 문자열
+  String jsonStr = ''' 
+            {
+              "userId" : 1,
+              "id" : 1,
+              "title" : "반드시 key값에 쌍따옴표가 있어야 JSON 문자열",
+              "completed" : true 
+            }
+                    ''';
+
+  /** 2 */
+  // 2 - 1 JSON 문자열을 파싱해서 Map 객체로 변환 해주기
+  // json.deocde() 메서는 JSON 형식의 문자열을 알아서 Map 구조로 파싱해 준다.
+  print("원래는 ${jsonStr.runtimeType} 타입"); // String
+
+  Map<String, dynamic> jsonStrToMap = json.decode(jsonStr);
+
+  print(jsonStrToMap.runtimeType); // _Map<String, dynamic)
+  print(jsonStrToMap.toString()); // {userId: 1, id: 1, title: 반드시 key값에 쌍따옴표가 있어야 JSON 문자열, completed: true}
+
+  // 이제 key값에 하나 하나 접근해서 값을 가져오거나, 반복문으로 처리할 수 있게 되었음
+  jsonStrToMap.forEach((key, value) {
+    print("key $key");
+    print("value $value");
+  });
+
+  print("-----------------------------");
+
+  // class화, 추상화해서 데이터를 편한게 가지고 놀 수 있음
+  // 2 - 2 Map 구조의 데이터를 Todo 클래스로 변환 하자
+  Todo myTodo1 = Todo.fromJson(jsonStrToMap);
+  print(myTodo1.userId);
+  print(myTodo1.id);
+  print(myTodo1.title);
+  print(myTodo1.completed);
+
+  // 실제 통신을 받아서 파싱 처리 해보시오!!
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// 비동기 함수 만들기
+Future<http.Response> fetchTodo() async {
+  // hhtp 통신 요청 시 응답 --> 해당 라이브러리의 데이터 타입을 확인을 해줘야 함
+  const url = "https://jsonplaceholder.typicode.com/todos/1";
+  //                      문자열을 기준으로 Uri 객체를 만들어 줌
+  var response = await http.get(Uri.parse(url)); // 통신하는데 시간이 걸릴 수 있음 -> 동기
+  print(response.runtimeType);
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
+  return response;
 }
