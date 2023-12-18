@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   // 화면에 그림을 그려주는 build 함수
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp( // 한 번 랜더링 되면 다시 이미지를 그릴 일이 없으므로 const
       debugShowCheckedModeBanner: false,
       home: StorePage(),
     ); // 객체를 메모리에 올리는 생성자
@@ -51,8 +51,14 @@ class StorePage extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset("assets/bag.jpeg"), // local 이미지를 들고올 때 사용
-            Image.asset("assets/cloth.jpeg") // local 이미지를 들고올 때 사용
+            // Expanded : 넓힐 수 있는만큼 확장하라                    cover : 내가 위치한 공간에 가득 차게하고 화면에서 넘어가면 잘라버려라
+            Expanded( // 주축 방향으로 크려고 함
+              flex: 1, // 값을 적지 않으면 기본 값이 1. 아래 이미지와 1 : 1
+              child: Image.asset("assets/bag.jpeg", fit: BoxFit.cover,)), // local 이미지를 들고올 때 사용
+            const SizedBox(height: 2), // 크기를 잡아주는 녀석
+            Expanded(
+              flex: 1,
+              child: Image.asset("assets/cloth.jpeg", fit: BoxFit.cover,)) // local 이미지를 들고올 때 사용
           ],
         ),
       )
