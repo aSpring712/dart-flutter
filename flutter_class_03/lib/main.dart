@@ -15,14 +15,32 @@ class MyApp extends StatelessWidget {
     // 위젯 : 부모가 될 수 있는 위젯과 그렇지 않은 위젯이 존재한다
     // 거의 대부분의 위젯은 child, children 속성이 있음
     Widget titleSection = Container( // 지역변수로 선언만 하고있지 그림을 그리라고 하지않고 있음
+      padding: const EdgeInsets.all(32),
       child: Row(
         children: [
-          Column(
-            children: [
-              Text("Oeschin Lake Campground", style: TextStyle(fontWeight: FontWeight.bold),),
-              Text("Kandersteg, Switzerland", style: TextStyle(fontWeight: FontWeight.bold),)
-            ],
-          )
+          Expanded(
+            child: Column(
+              // 교차축 정렬 속성
+              crossAxisAlignment: CrossAxisAlignment.start, // 교차축 정렬 (왼쪽으로 정렬)
+              children: [
+                Container(
+                  child: Text(
+                    "Oeschin Lake Campground",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  padding: EdgeInsets.only(bottom: 8),
+                ),
+                Text(
+                  "Kandersteg, Switzerland",
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                )
+              ],
+            ),
+          ),
+          // 2번째 자식
+          Icon(Icons.star, color: Colors.red[500],),
+          // 3번째 자식
+          const Text("41")
         ],
       ),
     );
@@ -36,8 +54,10 @@ class MyApp extends StatelessWidget {
           title: Text('Layout demo'),
           backgroundColor: Colors.orange,
         ),
-        body: Center(
-          child: Text("Hello World"),
+        body: Column(
+          children: [
+            titleSection, // 그림 그리라고 적용
+          ],
         ),
       ),
     );
