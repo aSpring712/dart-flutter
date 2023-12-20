@@ -10,6 +10,7 @@ class HomeScreen extends StatelessWidget { // 한 번 렌더링하면 상호작�
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Row(
           children: [
             Text('좌동'),

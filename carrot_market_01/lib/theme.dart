@@ -26,7 +26,7 @@ AppBarTheme appBarTheme() {
     centerTitle: false, // ios는 기본 center -> 이런것들을 통일 시키기 위한 세팅
     elevation: 0.0,
     iconTheme: iconTheme(), // 아이콘 검은색
-    titleTextStyle: GoogleFonts.nanumGothic(fontSize: 16.0, fontWeight: FontWeight.bold),
+    titleTextStyle: GoogleFonts.nanumGothic(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.black),
     color: Colors.black,
   );
 }
