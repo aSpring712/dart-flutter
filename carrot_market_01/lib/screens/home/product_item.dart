@@ -13,24 +13,24 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect( // 모서리 둥글게
-      borderRadius: BorderRadius.circular(10.0),
-      child: Container(
-        height: 135.0,
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
+    return Container(
+      height: 135.0,
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
             // Image.asset(name) // local에 있는 이미지를 올리는 것
-            Image.network( // 통신을 통해 받아올 때 쓰는 것
+            child: Image.network( // 통신을 통해 받아올 때 쓰는 것
               product.urlToImage,
               width: 115,
               height: 115,
               fit: BoxFit.cover,
             ),
-            const SizedBox(width: 16.0),
-            ProductDetail(),
-          ],
-        ),
+          ),
+          const SizedBox(width: 16.0),
+          ProductDetail(),
+        ],
       ),
     );
   }
