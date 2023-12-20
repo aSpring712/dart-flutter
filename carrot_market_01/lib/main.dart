@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_class_04/screens/main_screen.dart';
+import 'package:flutter_class_04/theme.dart';
 
 void main() {
   runApp(const CarrotMarketUI());
@@ -9,6 +11,11 @@ class CarrotMarketUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      title: 'carrot_market_ui',
+      debugShowCheckedModeBanner: false,
+      home: MainScreen(),
+      theme: theme(),
+    );
   }
 }
