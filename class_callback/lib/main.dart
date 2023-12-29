@@ -18,7 +18,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      home: SafeArea( // device 마다 body 영역 다르므로, body 영역의 적당한 곳에 배치
+        child: Scaffold(
+            body: Column(
+            children: [
+              Expanded(
+                  child: Center(child: Text(childMessageContent))
+              ),
+              Expanded(flex: 1, child: ChildA()), // Expanded : 확장
+              Expanded(flex: 1, child: ChildB()),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -30,10 +44,37 @@ class ChildA extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
+      child: InkWell(
+        onTap: () {
+          print("child A에 이벤트 발생");
+      },
       child: Container(
         width: double.infinity, // 영역만큼 무한히 넓혀라
         color: Colors.orange,
         child: const Center(child: Text('CHILD A')),
+        ),
+      ),
+    );
+  }
+}
+
+// 자식
+class ChildB extends StatelessWidget {
+  const ChildB({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: InkWell(
+        onTap: () {
+          print("child B에 이벤트 발생");
+        },
+        child: Container(
+          width: double.infinity, // 영역만큼 무한히 넓혀라
+          color: Colors.red,
+          child: const Center(child: Text('CHILD B')),
+        ),
       ),
     );
   }
