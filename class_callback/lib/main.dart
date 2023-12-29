@@ -17,11 +17,15 @@ class _MyAppState extends State<MyApp> {
   String childMessageContent = "여기는 부모 위젯 영역이야";
 
   // 매개변수로 자식들에게 함수를 전달
-  void onCallbackPressed() {
-    print("1111");
+  // 매개변수를 받을 수 있도록 설계 하자.
+  // 함수의 설계 모양이 변경됨
+  // (msg) {},  --> parameter type : String
+  // (context) {} --> parameter type : BuildContext
+  void onCallbackPressed(String msg) {
     // stf 위젯에 화면을 렌더링 하려면 --> setState() 함수를 써야 함
     setState(() {
-      childMessageContent = "자식에게 이벤트 발생 했네";
+      // childMessageContent = "자식에게 이벤트 발생 했네";
+      childMessageContent = msg;
     });
   }
 
