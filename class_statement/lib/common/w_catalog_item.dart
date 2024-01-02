@@ -56,6 +56,7 @@ class CatalogItem extends StatelessWidget {
           InkWell(
             onTap: () {
               print("${catalog.title} : 이벤트 발생");
+              onPressedCatalog(catalog);
             },
             child: Text(
               isInCart ? '✔' : 'ADD',

@@ -23,10 +23,12 @@ class CatalogWidget extends StatelessWidget {
     return ListView.builder(
         itemCount: responseListData.length, // 만큼 반복을 돌릴 것
         itemBuilder: (context, index) {
+
+          // 넘겨 받은 리스트 중에 하나의 오브젝트
           Catalog catalog = responseListData[index];
           return CatalogItem(
               catalog: catalog,
-              isInCart: true,
+              isInCart: cartCatalogList.contains(catalog), // 정보는 catalog_item이 가지고 있음
               onPressedCatalog: onPressedCatalog);
         },
     );
