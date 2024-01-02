@@ -1,3 +1,4 @@
+import 'package:class_statement/common/w_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../common/models/vo_catalog.dart';
@@ -21,8 +22,8 @@ class _HomeScreen1State extends State<HomeScreen1> {
   int currentIndex = 0;
   // 선택된 카탈로그 정보를 담을 수 있는 자료 구조 선언
   List<Catalog> catalogList = [
-    Catalog.name(color: Colors.red, title: '테스트 아이템1'),
-    Catalog.name(color: Colors.orange, title: '테스트 아이템2'),
+    // Catalog.name(color: Colors.red, title: '테스트 아이템1'),
+    // Catalog.name(color: Colors.orange, title: '테스트 아이템2'),
   ]; // CatalogWidget, CartWidget에서 써야해서 부모인 HomeScreen에서 상태 관리
 
   // 샘플 데이터 (local DB, 통신을 통해 데이터를 가져왔다고 가정)
@@ -67,17 +68,27 @@ class _HomeScreen1State extends State<HomeScreen1> {
       ),
       // index stack 사용
       body: IndexedStack(
+        index: currentIndex,
         children: [
-          // CatalogWidget(
-          //   responseListData: responseListData,
-          //   cartCatalogList: catalogList,
-          //   onPressedCatalog: onPressedCatalog
-          // ),
+          CatalogWidget(
+            responseListData: responseListData,
+            cartCatalogList: catalogList,
+            onPressedCatalog: onPressedCatalog
+          ),
           CartWidget(
             cartList: catalogList,
             onPressedCatalog: onPressedCatalog,
           ),
         ],
+      ),
+      bottomNavigationBar: BottomBar(
+        currentIndex: currentIndex,
+        cartTotal: '${catalogList.length}',
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
       ),
     );
   }
