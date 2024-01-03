@@ -36,7 +36,7 @@ class InheritedCartWidget extends InheritedWidget { // InheritedWidget -> 상태
   // 즉, 위젯 트리가 다시 빌드될 필요가 있는지 알려 줌
   // true, false 둘 중 하나를 return --> true(재빌드), false(stop)
   @override
-  bool updateShouldNotify(covariant InheritedWidget oldWidget) { // up casting 된 상태이기 때문에 수정 필요
+  bool updateShouldNotify(covariant InheritedCartWidget oldWidget) { // up casting 된 상태이기 때문에 수정 필요(InheritedWidget -> InheritedCartWidget)
     // 현재 InheritedCartWidget
     return cartList != oldWidget.cartList;
   }
