@@ -1,4 +1,5 @@
 import 'package:class_statement/common/w_bottom_bar.dart';
+import 'package:class_statement/inherited_widget/state_management/inh_cart_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../common/models/vo_catalog.dart';
@@ -46,14 +47,36 @@ class _HomeScreen2State extends State<HomeScreen2> {
     print('여기 HomeScreen 위젯 이벤트 발생');
 
     // 콜백이 일어나면 UI 업데이터 처리
-    setState(() {
-      if(catalogList.contains(catalog)) {
-        // 리스트에 object를 포함하고 있다면 삭제 처리
-        catalogList.remove(catalog);
-      } else {
-        catalogList.add(catalog);
-      }
-    });
+    try {
+      setState(() {
+        // 깊은 복사 개념으로 변경해주어야 한다
+        if(catalogList.contains(catalog)) {
+          // 삭제를 해야하지만 --> cartList 객체를 새로 생성해서 처리해야
+          // 깊은 복사 개념으로 동작한다.
+          // [1, 2, 3, 4] --> 4만 삭제
+          // catalogList 변수에 새로운 List 객체를 생성해서 기졵에 있던 데이터
+          // [1, 2, 3]을 넣는 것이 목표
+          catalogList = catalogList.where((e) {
+            return e != catalog;
+          }).toList(); // 새롭게 생성 (where -> 필터링 할 때 쓰는 함수)
+        } else {
+          // 새로운 object를 추가하는 코드 --> 깊은 복사
+          // [1, 2, 3] + 4
+          // 스프레드 연산자
+          catalogList = [...catalogList, catalog];
+        }
+
+        // // 얕은 복사 개념으로 들어감
+        // if(catalogList.contains(catalog)) {
+        //   // 리스트에 object를 포함하고 있다면 삭제 처리
+        //   catalogList.remove(catalog);
+        // } else {
+        //   catalogList.add(catalog);
+        // }
+      });
+    } catch (e, s) {
+      print(s);
+    }
   }
 
 
@@ -61,34 +84,34 @@ class _HomeScreen2State extends State<HomeScreen2> {
   Widget build(BuildContext context) {
     print("HomeScreen build() 함수 호출");
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('My Catalog'),
-      ),
-      // index stack 사용
-      body: IndexedStack(
-        index: currentIndex,
-        children: [
-          CatalogWidget(
-            responseListData: responseListData,
-            cartCatalogList: catalogList,
-            onPressedCatalog: onPressedCatalog
-          ),
-          CartWidget(
-            cartList: catalogList,
-            onPressedCatalog: onPressedCatalog,
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomBar(
-        currentIndex: currentIndex,
-        cartTotal: '${catalogList.length}',
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+    return InheritedCartWidget(
+      cartList: catalogList,
+      onPressedCatalog: onPressedCatalog,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('My Catalog'),
+        ),
+        // index stack 사용
+        body: IndexedStack(
+          index: currentIndex,
+          children: const [ // const 넣으면 안됨 -> compile 시점에 객체를 올리는 것
+            CatalogWidget(),
+            CartWidget(
+              // cartList: catalogList,
+              // onPressedCatalog: onPressedCatalog,
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomBar(
+          currentIndex: currentIndex,
+          cartTotal: '${catalogList.length}',
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }

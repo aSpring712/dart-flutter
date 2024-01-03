@@ -37,8 +37,13 @@ class InheritedCartWidget extends InheritedWidget { // InheritedWidget -> 상태
   // true, false 둘 중 하나를 return --> true(재빌드), false(stop)
   @override
   bool updateShouldNotify(covariant InheritedCartWidget oldWidget) { // up casting 된 상태이기 때문에 수정 필요(InheritedWidget -> InheritedCartWidget)
+    print('호출 시점확인');
+    print('old widget data : ${oldWidget.hashCode}');
+    print('새롭게 빌드된 widget data : ${cartList.hashCode}');
+    print('현재 개수 : ${cartList.length} / ${oldWidget.cartList.length}');
     // 현재 InheritedCartWidget
-    return cartList != oldWidget.cartList;
+    return cartList != oldWidget.cartList; // 객체 내 주소값만 비교 -> s_home_2.dart의 const 때문에 주소값이 변하지 않았기 때문에 true를 반환하지 않음
+    // return true;
   }
 
 }
