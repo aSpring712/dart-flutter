@@ -35,7 +35,7 @@ class CartWidget extends StatelessWidget {
               return CatalogItem(
                   catalog: catalog,
                   isInCart: true,
-                  onPressedCatalog: (catalog) {});
+                  onPressedCatalog: providerCart.onPressedCatalog);
             },
           ),
         ),

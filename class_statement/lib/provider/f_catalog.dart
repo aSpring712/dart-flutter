@@ -20,7 +20,7 @@ class CatalogWidget extends StatelessWidget {
         Catalog catalog = catalogListSample[index];
         return CatalogItem(
             catalog: catalog,
-            isInCart: false,
+            isInCart: providerCart.catalogCartList.contains(catalog),
             onPressedCatalog: providerCart.onPressedCatalog);
       },
     );

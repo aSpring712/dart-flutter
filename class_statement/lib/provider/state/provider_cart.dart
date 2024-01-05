@@ -12,8 +12,8 @@ class ProviderCart extends ChangeNotifier { // with -> mixin으로 들고오는 
   void onPressedCatalog(Catalog catalog) { // 얕은 복사 개념으로 돌아감 -> 깊은 복사 코드로 변경
     if(catalogCartList.contains(catalog)) {
       // catalogCartList.remove(catalog);
-      catalogCartList = catalogCartList.where((e) {
-        return e != catalog;
+      catalogCartList = catalogCartList.where((element) {
+        return element != catalog;
       }).toList();
     } else {
       // catalogCartList.add(catalog);
