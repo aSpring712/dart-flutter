@@ -2,6 +2,7 @@ import 'package:class_statement/stateful_widget/s_home_1.dart';
 import 'package:flutter/material.dart';
 
 import 'inherited_widget/s_home_2.dart';
+import 'provider/s_home_3.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: HomeScreen1(),
-      home: HomeScreen2(),
+      // home: HomeScreen2(),
+      home: HomeScreen3(),
     );
   }
 }
