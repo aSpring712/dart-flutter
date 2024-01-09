@@ -6,25 +6,20 @@ import 'f_cart.dart';
 import 'f_catalog.dart';
 
 // 상태가 있는 위젯 생성
-class HomeScreen1 extends StatefulWidget {
-  const HomeScreen1({super.key});
+class HomeScreen4 extends StatefulWidget {
+  const HomeScreen4({super.key});
 
   @override
-  State<HomeScreen1> createState() => _HomeScreen1State();
+  State<HomeScreen4> createState() => _HomeScreen4State();
 }
 
 // 상태 관리 - StatefulWidget 활용
 // 상태가 있는 위젯 생성
-class _HomeScreen1State extends State<HomeScreen1> {
+class _HomeScreen4State extends State<HomeScreen4> {
 
   // bottom navigation bar
   // 현재 선택된 index
   int currentIndex = 0;
-  // 선택된 카탈로그 정보를 담을 수 있는 자료 구조 선언
-  List<Catalog> catalogList = [
-    // Catalog.name(color: Colors.red, title: '테스트 아이템1'),
-    // Catalog.name(color: Colors.orange, title: '테스트 아이템2'),
-  ]; // CatalogWidget, CartWidget에서 써야해서 부모인 HomeScreen에서 상태 관리
 
   // 샘플 데이터 (local DB, 통신을 통해 데이터를 가져왔다고 가정)
   // late -> lazy loading
@@ -39,24 +34,6 @@ class _HomeScreen1State extends State<HomeScreen1> {
     responseListData = catalogListSample;
   }
 
-  // 콜백 받을 메서드 선언
-  void onPressedCatalog(Catalog catalog) { // Obj를 callback으로 넘겨받을 것
-
-    // 여기까지 event가 전달되는지 확인
-    print('여기 HomeScreen 위젯 이벤트 발생');
-
-    // 콜백이 일어나면 UI 업데이터 처리
-    setState(() {
-      if(catalogList.contains(catalog)) {
-        // 리스트에 object를 포함하고 있다면 삭제 처리
-        catalogList.remove(catalog);
-      } else {
-        catalogList.add(catalog);
-      }
-    });
-  }
-
-
   @override
   Widget build(BuildContext context) {
     print("HomeScreen build() 함수 호출");
@@ -69,21 +46,15 @@ class _HomeScreen1State extends State<HomeScreen1> {
       // index stack 사용
       body: IndexedStack(
         index: currentIndex,
+        // 코드 수정 예정
         children: [
-          CatalogWidget(
-            responseListData: responseListData,
-            cartCatalogList: catalogList,
-            onPressedCatalog: onPressedCatalog
-          ),
-          CartWidget(
-            cartList: catalogList,
-            onPressedCatalog: onPressedCatalog,
-          ),
+          CatalogWidget(),
+          CartWidget(),
         ],
       ),
       bottomNavigationBar: BottomBar(
         currentIndex: currentIndex,
-        cartTotal: '${catalogList.length}',
+        cartTotal: '${0}',
         onTap: (index) {
           setState(() {
             currentIndex = index;

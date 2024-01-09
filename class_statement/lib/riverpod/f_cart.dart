@@ -47,7 +47,7 @@ class CartWidget extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Center(
-            child: Text('SUM : ${cartList.length}', style: TextStyle(
+            child: Text('SUM : ${catList.length}', style: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.bold,
             ),),
