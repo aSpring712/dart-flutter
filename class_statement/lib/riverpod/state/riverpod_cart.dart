@@ -29,11 +29,21 @@ class RiverpodCart extends Notifier<List<Catalog>> {
   // 행위 - 동작을 만들어주면 됨
   void onCatalogPressed(Catalog catalog) {
     // 아래 로직이 적절한가? NO -> 아래 로직은 얕은 복사 개념 -> 안돌아갈 것
-    if(state.contains(catalog)) { // 내부적으로 state를 가지고 있으며 List<Catalog>
-      // 리스트에서 삭제 처리
-      state.remove(catalog);
+    // if(state.contains(catalog)) { // 내부적으로 state를 가지고 있으며 List<Catalog>
+    //   // 리스트에서 삭제 처리
+    //   state.remove(catalog);
+    // } else {
+    //   state.add(catalog);
+    // }
+
+    // 깊은 복사로 수정하기
+    if(state.contains(catalog)) {
+      state = state.where((element) {
+        return element != catalog;
+      }).toList();
     } else {
-      state.add(catalog);
+      state = [...state, catalog];
     }
+
   }
 }
