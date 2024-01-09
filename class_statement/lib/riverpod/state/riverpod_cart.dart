@@ -3,6 +3,15 @@ import 'package:riverpod/riverpod.dart';
 
 // riverpod 사용 시 포인트 - riverpod은 상태클래스와 상태 변경 로직 클래스를 분리한다.
 
+// 2 - 전역 변수 설계 : 상태변경(접근) 로직 클래스 담당
+// 외부에서 접근해야 하기 때문에 상태클래스를 전달해야 한다.
+final cartProvider = NotifierProvider<RiverpodCart, List<Catalog>>(() {
+
+
+  // return new RiverpodCart(); // 요즘 버전에서는 new 생략
+  return RiverpodCart();
+});
+
 // 1 - 상태 클래스의 설계             // state
 class RiverpodCart extends Notifier<List<Catalog>> {
 
