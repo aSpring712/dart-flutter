@@ -1,3 +1,4 @@
+import 'package:class_statement/provider/state/provider_badge.dart';
 import 'package:class_statement/provider/state/provider_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class _HomeScreen3State extends State<HomeScreen3> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ProviderCart()),
-        // ChangeNotifierProvider(create: (context) => ProviderCart()),
+        ChangeNotifierProvider(create: (context) => ProviderBadge(providerCart: context.read<ProviderCart>())),
         // ChangeNotifierProvider(create: (context) => ProviderCart()),
         // 단점 - 동일한 상태를 등록하면 마지막에 선언된 상태 제공자에게만 접근 가능 함
       ],
@@ -55,14 +56,17 @@ class _HomeScreen3State extends State<HomeScreen3> {
             CartWidget(),
           ],
         ),
-        bottomNavigationBar: BottomBar(
-          currentIndex: currentIndex,
-          cartTotal: '${catalogList.length}',
-          onTap: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-          },
+        // 아래 부분만 렌더링 하고싶을 때, select or consumer 사용
+        bottomNavigationBar: Consumer<ProviderBadge>(
+          builder: (context, providerBadge, child) => BottomBar(
+            currentIndex: currentIndex,
+            cartTotal: '${providerBadge.counter}',
+            onTap: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+          ),
         ),
       ),
     );
