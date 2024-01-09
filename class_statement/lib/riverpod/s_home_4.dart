@@ -1,5 +1,6 @@
 import 'package:class_statement/common/w_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common/models/vo_catalog.dart';
 import 'f_cart.dart';
@@ -36,30 +37,31 @@ class _HomeScreen4State extends State<HomeScreen4> {
 
   @override
   Widget build(BuildContext context) {
-    print("HomeScreen build() 함수 호출");
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('My Catalog'),
-      ),
-      // index stack 사용
-      body: IndexedStack(
-        index: currentIndex,
-        // 코드 수정 예정
-        children: [
-          CatalogWidget(),
-          CartWidget(),
-        ],
-      ),
-      bottomNavigationBar: BottomBar(
-        currentIndex: currentIndex,
-        cartTotal: '${0}',
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
+    // 3 - 위젯 트리에 등록
+    return ProviderScope(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('My Catalog'),
+        ),
+        body: IndexedStack(
+          index: currentIndex,
+          children: const [
+            // 자동으로 렌더링 되어야 하는 것들
+            CatalogWidget(),
+            CartWidget(),
+          ],
+        ),
+        bottomNavigationBar: BottomBar(
+          currentIndex: currentIndex,
+          cartTotal: '${0}',
+          onTap: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }
