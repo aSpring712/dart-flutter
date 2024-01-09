@@ -36,7 +36,7 @@ class RiverpodCart extends Notifier<List<Catalog>> {
     //   state.add(catalog);
     // }
 
-    // 깊은 복사로 수정하기
+    // 깊은 복사로 수정하기 -> 작동함
     if(state.contains(catalog)) {
       state = state.where((element) {
         return element != catalog;
