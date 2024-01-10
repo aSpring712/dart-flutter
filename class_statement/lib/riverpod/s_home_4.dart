@@ -1,4 +1,5 @@
 import 'package:class_statement/common/w_bottom_bar.dart';
+import 'package:class_statement/riverpod/state/riverpod_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -37,7 +38,6 @@ class _HomeScreen4State extends State<HomeScreen4> {
 
   @override
   Widget build(BuildContext context) {
-
     // 3 - 위젯 트리에 등록
     return ProviderScope(
       child: Scaffold(
@@ -53,14 +53,20 @@ class _HomeScreen4State extends State<HomeScreen4> {
             CartWidget(),
           ],
         ),
-        bottomNavigationBar: BottomBar(
-          currentIndex: currentIndex,
-          cartTotal: '${0}',
-          onTap: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-          },
+        /// ref.watch 하면 build 전체가 다 렌더링 -> const 안쓰면 전체가 다 메모리에 다시 올라가야 됨
+        /// 특정 부분만 렌더링 하고싶다면 (ex. bottom bar의 장바구니 개수 배지만)
+        bottomNavigationBar: Consumer(
+          //                 ref가 riverpod 참조 instance를 들고 있음
+          builder: (context, ref, child) => BottomBar(
+            currentIndex: currentIndex,
+            // ref.watch(badgeProvider) -> int
+            cartTotal: '${ref.watch(badgeProvider)}', // 계속 감지해야 되는 부분
+            onTap: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+          ),
         ),
       ),
     );
